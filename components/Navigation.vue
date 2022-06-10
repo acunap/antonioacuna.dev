@@ -8,8 +8,8 @@ defineProps({
 </script>
 
 <template>
-    <ul class="navigation">
-        <li v-for="item in navigationTree" :key="item.title">
+    <ul class="flex flex-col justify-center items-center">
+        <li v-for="item in navigationTree" :key="item.title" class="text-center">
             <NuxtLink :to="item._path">
                 {{ item.title}}
             </NuxtLink>
