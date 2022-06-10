@@ -8,5 +8,6 @@ const { data: navigation } = await useAsyncData('navigation', () => {
   <main>
     <Navigation :navigation-tree="navigation"/>
     <NuxtPage />
+    <SocialMedia />
   </main>
 </template>

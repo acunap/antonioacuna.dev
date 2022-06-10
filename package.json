@@ -9,5 +9,10 @@
   "devDependencies": {
     "@nuxt/content": "^2.0.0",
     "nuxt": "^3.0.0-rc.3"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
+    "@fortawesome/vue-fontawesome": "^3.0.0"
   }
 }
