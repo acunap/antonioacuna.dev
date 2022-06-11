@@ -4,5 +4,6 @@ module.exports = {
     'app.vue',
     './pages/**/*.vue',
     './components/**/*.vue'
-  ]
+  ],
+  plugins: [require('@tailwindcss/typography')]
 }
