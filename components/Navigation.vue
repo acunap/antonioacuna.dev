@@ -11,6 +11,8 @@ defineProps({
 const isNavigationListHidden = ref(false)
 
 const toggleNavigationListVisibility = () => isNavigationListHidden.value = !isNavigationListHidden.value
+
+watch(useRoute(), () => isNavigationListHidden.value = true)
 </script>
 
 <template>
