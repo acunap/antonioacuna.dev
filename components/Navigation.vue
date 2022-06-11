@@ -8,7 +8,7 @@ defineProps({
     }
 })
 
-const isNavigationListHidden = ref(false)
+const isNavigationListHidden = ref(true)
 
 const toggleNavigationListVisibility = () => isNavigationListHidden.value = !isNavigationListHidden.value
 
