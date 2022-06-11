@@ -1,6 +1,4 @@
 <script setup>
-import { reactive } from 'vue'
-
 defineProps({
     navigationTree: {
         type: Array,
