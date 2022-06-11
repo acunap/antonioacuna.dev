@@ -1,5 +1,5 @@
 <template>
-  <main class="flex justify-center items-center text-center">
-    <ContentDoc class="prose"/>
-  </main>
+  <article class="overflow-y-auto py-16">
+    <ContentDoc class="prose max-w-none"/>
+  </article>
 </template>
