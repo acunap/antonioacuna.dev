@@ -5,36 +5,134 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧑‍💻</text></svg>">
   <title>antonioacuna.dev</title>
   <style>
+    :root {
+      --bg-color: #0d1117;
+      --text-color: white;
+      --icon-color: white;
+      --toggle-bg: #30363d;
+      --toggle-color: #f0f6fc;
+      --toggle-slider-bg: #ffffff;
+      --toggle-border: #586069;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #ffffff;
+      --text-color: #24292f;
+      --icon-color: #24292f;
+      --toggle-bg: #f6f8fa;
+      --toggle-color: #24292f;
+      --toggle-slider-bg: #ffffff;
+      --toggle-border: #d0d7de;
+    }
+
     body {
       margin: 0;
       height: 100vh;
-      background: #0d1117;
-      color: white;
+      background: var(--bg-color);
+      color: var(--text-color);
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
+
     .container {
       display: flex;
       gap: 4rem;
+      align-items: center;
     }
+
     a {
       color: inherit;
       text-decoration: none;
       transition: transform 0.2s ease;
     }
+
     a:hover {
       transform: scale(1.1);
     }
+
     svg {
       width: 64px;
       height: 64px;
-      fill: white;
+      fill: var(--icon-color);
+      transition: fill 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 60px;
+      height: 30px;
+      background: var(--toggle-bg);
+      border: 2px solid var(--toggle-border);
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      box-sizing: border-box;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+    }
+
+    .toggle-slider {
+      width: 22px;
+      height: 22px;
+      background: var(--toggle-slider-bg);
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    [data-theme="light"] .toggle-slider {
+      transform: translateX(30px);
+    }
+
+    .toggle-icon {
+      width: 12px;
+      height: 12px;
+      fill: #000000;
+      transition: fill 0.3s ease;
+    }
+
+    .sun-icon {
+      display: none;
+    }
+
+    .moon-icon {
+      display: block;
+    }
+
+    [data-theme="light"] .sun-icon {
+      display: block;
+    }
+
+    [data-theme="light"] .moon-icon {
+      display: none;
     }
   </style>
 </head>
 <body>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+      <div class="toggle-slider">
+        <svg class="sun-icon toggle-icon" viewBox="0 0 24 24">
+          <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+        </svg>
+        <svg class="moon-icon toggle-icon" viewBox="0 0 24 24">
+          <path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"/>
+        </svg>
+      </div>
+    </button>
+
     <div class="container">
         <a href="https://github.com/acunap" target="_blank" aria-label="GitHub">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -47,5 +145,24 @@
               </svg>
           </a>
     </div>
+
+    <script>
+      // Theme toggle functionality
+      const themeToggle = document.getElementById('theme-toggle');
+      const html = document.documentElement;
+      
+      // Check for saved theme preference or default to 'dark'
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      html.setAttribute('data-theme', currentTheme);
+      
+      // Theme toggle click handler
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+      });
+    </script>
 </body>
 </html>
